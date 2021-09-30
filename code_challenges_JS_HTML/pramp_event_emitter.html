@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <title>Event Emitter</title>
+</head>
+<body>
+<script>
+    // Add your implementation here, and initialize eventEmitter with an actual value;
+
+    var eventEmitter = {
+    events:{}, //{'pramp':[cb1,cb2]}
+    on:function(topic,cb){
+    // if topic exists, push cb
+    if(this.events[topic]){
+    this.events[topic].push(cb);
+    // else create topic
+}else{
+    this.events[topic]=[cb];
+}
+
+},
+    off:function(topic,cb){
+    // only keep items that do not match cb.name
+    if(this.events[topic]){
+    this.events[topic]=this.events[topic].filter((cbs)=>cbs.name!==cb.name);
+}
+},
+    // should only emit the first time called, not for addtional calls
+    once:function(topic,cb){
+    // create a wrapper function around submitted arguments
+    const tempOnce= (args)=>{
+    // call the function then call this.off to remove the function
+    cb(args);
+    this.off(topic,tempOnce);
+}
+    //add this to the object to be called upon emit
+    this.on(topic,tempOnce)
+
+},
+    emit:function(topic,eventValue){
+    if(this.events[topic]){
+    this.events[topic].forEach((cb)=>cb(eventValue))
+}
+
+}
+
+
+}
+
+    function responseToEvent(msg) {
+    console.log(msg);
+}
+
+    eventEmitter.on('pramp', responseToEvent);
+    eventEmitter.once('pramp', function(msg) { console.log(msg + ' just once!'); });
+    eventEmitter.emit('pramp', '1st');
+    eventEmitter.emit('pramp', '2nd');
+    eventEmitter.off('pramp', responseToEvent);
+    eventEmitter.emit('pramp', '3rd');
+    eventEmitter.emit('pramp', '1st');
+</script>
+</body>
+</html>
