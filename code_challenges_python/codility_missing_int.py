@@ -19,6 +19,11 @@ N is an integer within the range [1..100,000];
 each element of array A is an integer within the range [−1,000,000..1,000,000].
 """
 
+"""
+Codility results:
+Correctness: 100%, Performance: 100%  Task Score: 100%
+"""
+
 def solution(A):
 	sorted_A = sorted(A)
 	any_missing_values = False
@@ -39,15 +44,12 @@ def solution(A):
 				return previous_i+1
 	# if we made it this far there were no gaps in the array and we must check the last item in A
 	# this leaves two possibilities
-	# case 1: array is full of negative values
-	if sorted_A[-1] < 0:
+	# case 1: array is full of negative values or ends in 0
+	if sorted_A[-1] <= 0:
 		return 1
 	# case 2: array has at least some positive values without gaps
 	if sorted_A[-1] > 0:
 		return sorted_A[-1]+1
-
-
-
 
 
 case_dict = {
@@ -64,14 +66,18 @@ case_dict = {
 # case 6: mixed values missing values
 "case6" : [-5000, -100000, 5, 1, 2],
 # case 7: mixed values no missing values
-"case7" : [-5000, -100000, 3, 1, 2]
+"case7" : [-5000, -100000, 3, 1, 2],
+# case 8: two gaps
+"case8" : [1, 2, 4, 5, 7], # expect 3,
+# biggest value is 0
+"case9" : [-1,-2,-3,0] #  expect 1
 }
 
 test_cases = []
 for key in case_dict:
 	test_cases.append(case_dict[key])
 
-answers = [5, 4, 1, 1, 2, 3, 4]
+answers = [5, 4, 1, 1, 2, 3, 4, 3, 1]
 
 def run_tests(test_cases, answers):
 	"""
