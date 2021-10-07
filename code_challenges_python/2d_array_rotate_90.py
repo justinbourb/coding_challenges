@@ -9,11 +9,12 @@ def gen_blank_array(length):
 		blank_array.append(temp[:])
 	return blank_array
 
-def solution(arr):
+def solution_using_new_array(arr):
 	"""
-	This function will rotate a 2d array 90 degrees clockwise
-	:param arr:
-	:return:
+	This function will rotate a 2d array 90 degrees clockwise.
+	This is accomplished by filling in a blank array with the data provided as input.
+	:param arr: an array of numbers to rotate
+	:return: a new rotated array
 	"""
 	blank_array = gen_blank_array(len(arr))
 	# first row => arr[len(arr)-1][i]
@@ -28,6 +29,34 @@ def solution(arr):
 			blank_array[calculated_row][calculated_column] = value_to_transpose
 		row +=1
 	return blank_array
+
+def solution(arr):
+	"""
+	Purpose:
+		This function will rotate a 2d array 90 degrees clockwise.
+		This is accomplished by modifying the provided array in place.
+	Methodology:
+		1) Convert the rows into columns by swapping values horizontally.
+			Each row in the diagram is a list of values.
+			[1     [1 2 3 4 5]
+			 2  =>
+			 3
+			 4
+			 5]
+		2) Swap columns into the correct order
+			[1 2 3 4 5] => [5 2 3 4 1] => [5 4 3 2 1]
+	:param arr: an array of numbers to rotate
+	:return: a the input array rotated in place
+	"""
+	height = len(arr)
+	width = len(arr[0])
+	# Step 1 convert rows into columns
+	# swap from height 0 to N-1
+	# swap from width 0 to N-1
+	# i and j are int
+	for i in height:
+		for j in width:
+			pass
 
 
 answers = [[
